@@ -7,7 +7,7 @@ namespace Bread_Calculator
 {
     // ---------------------------------------------------------------------
     // 18/09/2026 - Last Modified
-    // Made my Alexander. Owner of NeoCircuit-Studios.
+    // Made by Alexander. Owner of NeoCircuit-Studios.
     // This is free and open source with MIT License
     // This can be used for anything.
     // Assets are from there respected owners
