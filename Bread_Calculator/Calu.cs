@@ -83,7 +83,7 @@ namespace Bread_Calculator
             sound.SoundLocation = "https://neocircuit-studios.com/stream/pub/bread_calculator/breadsong.wav";
             sound.LoadAsync();
 
-            // preload the image bc its big and we dont 
+            // preload the image because its big and we dont 
             // want to wait for it..
             sound.LoadCompleted += SOUNDLOADED_BREAD;
             pictureBox1.LoadAsync("https://neocircuit-studios.com/stream/pub/bread_calculator/breadgifsheet.png");

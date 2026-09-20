@@ -106,7 +106,9 @@ namespace GameMoes_00
             MinimumSize = new Size(816, 489);
             Name = "Game";
             Text = "Game";
+            FormClosing += UClose;
             Load += ULoaded;
+            Shown += UShow;
             BlackPanel.ResumeLayout(false);
             BlackPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)GameLogoBox).EndInit();

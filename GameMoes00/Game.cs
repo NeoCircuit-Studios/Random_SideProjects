@@ -42,13 +42,14 @@ namespace GameMoes_00
 
     public partial class Game : Form
     {
-        enum GameState 
+        enum GameState
         {
             Null,
             Booting
         }
         GameState gameState = GameState.Null;
 
+        BreadEngine eBreadEngine = new BreadEngine();
         public Game()
         {
             InitializeComponent();
@@ -61,6 +62,7 @@ namespace GameMoes_00
             BlackPanel.Hide();
             LoadingStatusText.Hide();
 
+            Debug.WriteLine("GELLOO");
         }
 
         // this runs when the window is loaded
@@ -86,7 +88,7 @@ namespace GameMoes_00
             //}
         }
 
-        private void Boot() 
+        private void Boot()
         {
 
             Bread.GetLog().Info("Booting Game..");
@@ -114,7 +116,7 @@ namespace GameMoes_00
             timer1.Start();
             timer1.Tick += (sender, e) =>
             {
-                if (Bread.GetAssets().IsLoadingLogoLoaded()) 
+                if (Bread.GetAssets().IsLoadingLogoLoaded())
                 {
                     Bread.GetMusic().PlayMusicLooped(Bread.GetMusic().GetMainMenuPlayer());
                     Bread.GetLoadingScreen().UpdateProgressBar(35, LoadingProgressBar);
@@ -122,14 +124,38 @@ namespace GameMoes_00
                 }
             };
             LoadingStatusText.Text = "Booting..";
+
         }
-        private void MainMenu() 
+
+        private void MainMenu()
         {
         }
         public void Shutdown()
         {
-
+            eBreadEngine.Update();
         }
 
+        System.Windows.Forms.Timer loop = new System.Windows.Forms.Timer();
+        private void UShow(object sender, EventArgs e)
+        {
+            eBreadEngine.InitWithExistingWindow(this.Handle);
+
+            loop.Interval = 16; // 60 FPS?
+            loop.Start();
+            loop.Tick += (sender, e) =>
+            {
+                if (!eBreadEngine.TargetCouldClose())
+                    Close();
+
+                eBreadEngine.Update();
+            };
+        }
+
+        private void UClose(object sender, FormClosingEventArgs e)
+        {
+            eBreadEngine.SetTarget(false);
+            loop.Stop();
+            eBreadEngine.Destroy();
+        }
     }
 }
