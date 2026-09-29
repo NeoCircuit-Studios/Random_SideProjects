@@ -55,9 +55,14 @@ namespace klikker
             youusuckatthisgamesore++;
             File.WriteAllText(savefile, youusuckatthisgamesore.ToString());
             label1.Text = youusuckatthisgamesore.ToString();
-            int x = rand.Next(0, 450); 
+            int x = rand.Next(0, 450);
             int y = rand.Next(0, 250);
-            button1.Location = new Point(x,y);
+            button1.Location = new Point(x, y);
+        }
+
+        private void MOVE(object sender, EventArgs e)
+        {
+
         }
     }
 }

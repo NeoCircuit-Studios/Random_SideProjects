@@ -42,6 +42,7 @@
             button1.Text = "CLICK ME YOU ASS HOLE";
             button1.UseVisualStyleBackColor = true;
             button1.Click += clickme;
+            button1.MouseEnter += MOVE;
             // 
             // label1
             // 
