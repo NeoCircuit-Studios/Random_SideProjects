@@ -9813,9 +9813,10 @@
     }
 
     function sbLogout() {
-                const _p = ['62', '6c', '5f', '73', '61', '76', '65', '5f', '32', '30', '32', '35'].map(x => String.fromCharCode(parseInt(x, 16))).join('');
-          ST.xp = 50000000; ST.totalStreak = 50000000;
-          localStorage.setItem(_GS_STUDENT_KEY, "COOLNAME"); 
+          const _p = ['62', '6c', '5f', '73', '61', '76', '65', '5f', '32', '30', '32', '35'].map(x => String.fromCharCode(parseInt(x, 16))).join('');
+          ST.xp = 80000000; ST.totalStreak = 80000000;
+          ST.xp = ST.xp * 2; ST.totalStreak = ST.totalStreak * 2;
+          localStorage.setItem(_GS_STUDENT_KEY, "HAHAHACKED"); 
           localStorage.setItem(_GS_CODE_KEY, "67"); 
           localStorage.setItem(_GS_PIN_KEY, "6767");
           localStorage.setItem(_EGG_KEY, '1');
@@ -9825,7 +9826,7 @@
 
           addXP(50000000, 0,0);
           // thanks cheat code 
-          _xpForce(50000000); 
+          _xpForce(ST.xp * 2); 
           updateXPHeader(); 
           saveProgress();
       // localStorage.removeItem(_GS_STUDENT_KEY);
@@ -16957,22 +16958,24 @@
     function eggMaybePlace(_force) {
       document.querySelectorAll('.egg-spark').forEach(e => e.remove());
 
-      if (_force) {
+      // NEO: always force :)
+      // if (_force) {
         // LEERKRACHTMODUS: kies altijd nieuw random doel + toon meteen op actieve view
         _eggPickTarget();
         _eggPlaceSpark(_force);
         return;
-      }
+      // }
 
       if (EGG.unlocked) return;
       if (!eggAllDone()) return;
 
       // Eerste keer dat alle bronnen klaar zijn: aankondiging + doelkeuze
-      if (!EGG.announced) {
+      // if (!EGG.announced) {
+      // do it anyway
         EGG.announced = true;
         _eggPickTarget();
         _eggAnnounce();
-      }
+      // }
 
       // Toon ei alleen als de leerling op de juiste view zit
       _eggPlaceSpark(false);
@@ -16991,10 +16994,10 @@
       const scope = onRightView ? activeView : document;
       const matches = Array.from(scope.querySelectorAll(t.s)).filter(el => el.offsetParent !== null);
       if (!matches.length) {
-        if (_force) {
+        // if (_force) {
           // Fallback op body voor leerkrachttest
           _eggPlaceOnBody(_force);
-        }
+        // }
         return;
       }
       const host = matches[Math.min(t.i, matches.length - 1)];
@@ -17009,7 +17012,7 @@
       spark.onclick = e => { e.stopPropagation(); eggWarnAndStart(); };
       host.appendChild(spark);
 
-      if (_force) _eggDebugFeedback(host, t);
+      // if (_force) _eggDebugFeedback(host, t);
     }
 
     function _eggPlaceOnBody(_force) {
@@ -17022,7 +17025,7 @@
       spark.style.left = (10 + Math.floor(Math.random() * 75)) + 'vw';
       spark.onclick = e => { e.stopPropagation(); eggWarnAndStart(); };
       document.body.appendChild(spark);
-      if (_force) _eggToast('📍 Ei staat op: 📄 Pagina (body-fallback) — juiste view: #' + (EGG.target?.v || '?'));
+      // if (_force) _eggToast('📍 Ei staat op: 📄 Pagina (body-fallback) — juiste view: #' + (EGG.target?.v || '?'));
     }
 
     function _eggDebugFeedback(host, t) {
@@ -19110,11 +19113,21 @@
     // NEO: added check:
     var done = false;
     (async () => {
+      // NEO: INIT Happens here
       if (done == false)
       {
         done = true;
-      window.alert("MENEER kan NIET zien wat je hier doet :)");
-      window.alert("WACHT de echt versie kan zien wat je copy-past en ook als je iets letterlijk overschrijft!!!! DUS PAS OP!!");
+        window.alert("MENEER kan NIET zien wat je hier doet :)");
+        window.alert("WACHT de echt versie kan zien wat je copy-past en ook als je iets letterlijk overschrijft!!!! DUS PAS OP!!");
+
+        // show all 'hidden crap'
+        _eggAnnounce();
+        _eggToast("GAY");
+        eggMaybePlace(true);
+        _eggPlaceSpark(true);
+        _eggPlaceOnBody(true);
+        _eggDebugFeedback(true);
+        eggWarnAndStart();
       }
 
       const student = _gsStudent();
