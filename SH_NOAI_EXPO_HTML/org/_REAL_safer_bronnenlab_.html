@@ -2693,8 +2693,9 @@ h1,h2,h3,.chapter-title,.les-title,.section-title{font-family:var(--f-head)}
   <div style="text-align:center;margin-top:36px;padding-bottom:8px;display:flex;flex-direction:column;align-items:center;gap:10px">
     <button onclick="resetProgress()" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:.75rem;padding:6px 16px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;opacity:.7;transition:opacity .2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">🗑 Voortgang wissen</button>
     <button onclick="wtToggleCode()" style="background:none;border:none;color:var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="Code invoeren">🔑</button>
-    <button onclick="_NEO_SetForceXPx(9999)" style="background:#f5f5f5;border: 5px solid var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="Code invoeren">HACK: FORCE 9999xp</button>
-    <button onclick="_NEO_SetForceXPx(10)" style="background:#f5f5f5;border: 5px solid var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="Code invoeren">HACK: FORCE 10xp</button>
+    <button onclick="_NEO_SetForceXPx(9999)" style="background:#f5f5f5;border: 5px solid var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="HACK: FORCE 9999xp">HACK: FORCE 9999xp</button>
+    <button onclick="_NEO_SetForceXPx(10)" style="background:#f5f5f5;border: 5px solid var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="HACK: FORCE 10xp">HACK: FORCE 10xp</button>
+    <button onclick="_NEO_SpoofName('TEST TEST')" style="background:#f5f5f5;border: 5px solid var(--border);font-size:.68rem;cursor:pointer;font-family:'Nunito',sans-serif;padding:2px 8px;letter-spacing:.04em" title="HACK: FORCE 10xp">HACK: SPOOF NAME</button>
     <div id="wt-code-wrap" style="display:none;align-items:center;gap:8px">
       <input id="wt-code-input" type="text" placeholder="Voer code in…"
         onkeydown="if(event.key==='Enter')wtCheckCode()"
@@ -4601,10 +4602,15 @@ function renderOpenVraag(b){
     const hint = $('ov-hint');
     if(ta.readOnly){ hint.textContent = '✓ Ingediend'; hint.style.color='var(--green)'; return; }
     if(w>=OV_MINW){ btn.classList.remove('locked'); btn.textContent='▼ Bekijk modelantwoord'; hint.textContent='✓ Je kunt het modelantwoord openen'; hint.style.color='var(--green)'; }
-    else { btn.classList.add('locked'); btn.textContent='🔒 Modelantwoord'; hint.textContent='nog '+(OV_MINW-w)+' woorden'; hint.style.color=''; }
+    else { 
+  // NEO: removed:
+      // btn.classList.add('locked'); 
+      btn.textContent='🔒 Modelantwoord'; hint.textContent='nog '+(OV_MINW-w)+' woorden'; hint.style.color=''; }
   }
   function lock(){
-    ta.readOnly = true; ta.classList.add('locked');
+// NEO: changed:
+    ta.readOnly = false; 
+    // ta.classList.add('locked');
     $('ov-rewrite').style.display = 'inline-block';
   }
   function markSA(k){
@@ -4615,7 +4621,8 @@ function renderOpenVraag(b){
   }
   ta.addEventListener('input', upd);
   btn.onclick = ()=>{
-    if(btn.classList.contains('locked')) return;
+// NEO: Removed
+    //if(btn.classList.contains('locked')) return;
     if(!ta.readOnly){
       _openSet(b.id, {t: ta.value.trim().slice(0,2000), w: _wordCount(ta.value), p: pasted?1:0, a: ''});
       lock(); saveProgress();
@@ -9803,7 +9810,9 @@ function renderGroteOefening(go){
     if(prev && prev.t){
       ta.value = prev.t;
       goWC(i, ta, s.nr===4?50:20);
-      ta.readOnly = true; ta.classList.add('locked');
+      ta.readOnly = true; 
+// NEO: removed:
+      //ta.classList.add('locked');
       const h = $('go-wc-hint-'+i); if(h){ h.textContent='✓ Ingediend — je antwoord is vastgezet'; h.style.color='var(--green)'; }
     }
   });
@@ -9846,19 +9855,25 @@ function goWC(i, el, minW){
     btn.classList.remove('locked');
     if(hint){ hint.textContent = '✓ Klaar! Je kunt het modelantwoord bekijken.'; hint.style.color='var(--green)'; }
   } else {
-    btn.classList.add('locked');
+// NEO: Removed
+    //btn.classList.add('locked');
     if(hint){ hint.textContent = `schrijf minstens ${minW} woorden om het modelantwoord te ontgrendelen`; hint.style.color=''; }
   }
 }
 
 function toggleGoModel(i){
   const btn = $('go-mbtn-'+i);
-  if(btn.classList.contains('locked')) return;
+// NEO: Removed
+  //if(btn.classList.contains('locked')) return;
   const ta = $('go-ta-'+i);
   if(ta && !ta.readOnly){
     const key = (ST.curGO||'')+'#'+i;
     _openSet(key, {t: ta.value.trim().slice(0,3000), w: _wordCount(ta.value), p: ta.dataset.pasted?1:0});
-    ta.readOnly = true; ta.classList.add('locked');
+// NEO: changed
+    //ta.readOnly = true; 
+    ta.readOnly = false; 
+// NEO: Removed
+    //ta.classList.add('locked');
     const h = $('go-wc-hint-'+i); if(h){ h.textContent='✓ Ingediend — je antwoord is vastgezet'; h.style.color='var(--green)'; }
     saveProgress();
   }
@@ -10632,16 +10647,25 @@ function _bindLes(les){
       const w=_wordCount(ta.value);
       if(ta.readOnly){ st.textContent=''; return; }
       if(w>=LP_CUE_MINW){ btn.classList.remove('locked'); btn.textContent='▼ Toon antwoord'; st.textContent=''; }
-      else { btn.classList.add('locked'); btn.textContent='🔒 Toon antwoord'; st.textContent = w? 'nog '+(LP_CUE_MINW-w)+' woord'+(LP_CUE_MINW-w===1?'':'en') : ''; }
+      else { 
+// NEO: removed:
+        // btn.classList.add('locked'); 
+        btn.textContent='🔒 Toon antwoord'; st.textContent = w? 'nog '+(LP_CUE_MINW-w)+' woord'+(LP_CUE_MINW-w===1?'':'en') : ''; }
     };
     ta.addEventListener('input', upd);
     btn.onclick = ()=>{
-      if(btn.classList.contains('locked')) return;
+// NEO: Removed
+      //if(btn.classList.contains('locked')) return;
       if(!ta.readOnly){
         firstEver = !(ST.open[key] && ST.open[key].t);
         cycleBase = _revBase(les.id, i);
         _openSet(key, {t: ta.value.trim().slice(0,800), w:_wordCount(ta.value), a:''});
-        ta.readOnly=true; ta.classList.add('locked'); mark('');
+// NEO: changed:
+        //ta.readOnly=true; 
+        ta.readOnly=false; 
+// NEO: removed:
+        //ta.classList.add('locked'); 
+        mark('');
         _lpSave();
       }
       ans.classList.add('visible'); btn.style.display='none';
@@ -10658,7 +10682,13 @@ function _bindLes(les){
       btn.style.display=''; upd(); ta.focus();
     };
     const prev = ST.open[key];
-    if(prev && prev.t){ ta.value=prev.t; ta.readOnly=true; ta.classList.add('locked'); ans.classList.add('visible'); btn.style.display='none'; mark(prev.a||''); if(!prev.a) cycleBase=_revBase(les.id, i); }
+    if(prev && prev.t){ ta.value=prev.t; 
+      //ta.readOnly=true; 
+// NEO: changed:
+      ta.readOnly=false; 
+// NEO: removed:
+      //ta.classList.add('locked'); 
+      ans.classList.add('visible'); btn.style.display='none'; mark(prev.a||''); if(!prev.a) cycleBase=_revBase(les.id, i); }
     upd();
   });
 
@@ -10681,14 +10711,24 @@ function _bindLes(les){
     if(_wordCount(sta.value)<LP_SAM_MINW) return;
     const first = !(ST.open[sk] && ST.open[sk].t);
     _openSet(sk, {t: sta.value.trim().slice(0,3000), w:_wordCount(sta.value), p: pasted?1:0, a:''});
-    sta.readOnly=true; sta.classList.add('locked'); supd();
+// NEO: changed:
+    //sta.readOnly=true; 
+    sta.readOnly=false; 
+// NEO: removed:
+    //sta.classList.add('locked'); 
+    supd();
     if(first){ const r=sbtn.getBoundingClientRect(); addXP(XP_LP_SAM, r.left+r.width/2, r.top); }
     _lpAfterChange(les, true);
   };
   const samCrit=_critBind($('lp-sam-crit'), sk, color=>{ _openSet(sk,{a:color}); _lpAfterChange(les); });
   srw.onclick=()=>{ sta.readOnly=false; sta.classList.remove('locked'); pasted=false; samCrit.reset(); supd(); sta.focus(); };
   _kaderBind($('les-sam'));
-  const ps=ST.open[sk]; if(ps && ps.t){ sta.value=ps.t; sta.readOnly=true; sta.classList.add('locked'); }
+  const ps=ST.open[sk]; if(ps && ps.t){ sta.value=ps.t; 
+// NEO: changed:
+    // sta.readOnly=true; 
+    sta.readOnly=false; 
+// NEO: removed:
+    //sta.classList.add('locked'); }
   supd();
 
   // zelfcheck
@@ -11026,8 +11066,19 @@ function _renderRev(){
         <div class="cue-judge"><span>Hoe goed wist je dit?</span><button class="go-sa-btn" data-k="rood">✗ Niet gekend</button><button class="go-sa-btn" data-k="oranje">± Deels</button><button class="go-sa-btn" data-k="groen">✓ Gekend</button></div></div>
     </div>`;
   const ta=$('rev-ta'), btn=$('rev-btn');
-  ta.addEventListener('input',()=>{ const w=_wordCount(ta.value); const okk=w>=LP_CUE_MINW; btn.classList.toggle('locked',!okk); btn.textContent=okk?'▼ Toon antwoord':'🔒 Toon antwoord'; $('rev-st').textContent=okk||!w?'':'nog '+(LP_CUE_MINW-w)+' woord'+(LP_CUE_MINW-w===1?'':'en'); });
-  btn.onclick=()=>{ if(btn.classList.contains('locked')) return; ta.readOnly=true; ta.classList.add('locked'); btn.style.display='none'; $('rev-ans').classList.add('visible'); };
+  ta.addEventListener('input',()=>{ const w=_wordCount(ta.value); const okk=w>=LP_CUE_MINW; 
+// NEO: Removed
+    //btn.classList.toggle('locked',!okk); 
+    btn.textContent=okk?'▼ Toon antwoord':'🔒 Toon antwoord'; $('rev-st').textContent=okk||!w?'':'nog '+(LP_CUE_MINW-w)+' woord'+(LP_CUE_MINW-w===1?'':'en'); });
+  btn.onclick=()=>{ 
+// NEO: Removed
+    //if(btn.classList.contains('locked')) return; 
+// NEO: changed:
+  //ta.readOnly=true; 
+  ta.readOnly=false; 
+// NEO: removed:
+  //ta.classList.add('locked'); 
+  btn.style.display='none'; $('rev-ans').classList.add('visible'); };
   $('rev-ans').querySelectorAll('.go-sa-btn').forEach(b=>b.onclick=()=>{
     const k=b.dataset.k;
     _openSet(_lpKey(les.id,'c'+i), {t: ta.value.trim().slice(0,800), w:_wordCount(ta.value), a:k});
@@ -12116,8 +12167,6 @@ function _scoresLoad(obj){ _scoresClear(); if(obj&&typeof obj==='object'){ _scor
 // INIT — check Supabase sessie
 // ═══════════════════════════════════════
 (async()=>{
-//NEO: msg added ID: PLATON
-  _secNotice('Hooking Payload...');
   const student = _gsStudent();
   if(!student) document.getElementById('header').style.display='none';
   if(student){
@@ -12224,6 +12273,7 @@ async function wtCheckCode(){
     setTimeout(()=>{input.style.borderColor='';},1000);
   }
 }
+// NEO: added
 function _NEO_SetForceXPx(input) {
   spawnConfetti();
   spawnConfetti();
@@ -12231,6 +12281,13 @@ function _NEO_SetForceXPx(input) {
   _xpForce(input); updateXPHeader(); saveProgress();
   _secNotice('HACK: added ', input, " XP!");
 }
+// NEO: added
+function _NEO_SpoofName(name) {
+  if (!name) return;
+  if (name == "") return;
+
+}
+// NEO: added
 function _NEO_Telluser(text) {
     const t=document.createElement('div');
     t.textContent=text;
