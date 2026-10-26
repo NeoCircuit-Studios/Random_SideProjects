@@ -1,4 +1,4 @@
-namespace rublixcobe
+namespace RublixCube
 {
     // ---------------------------------------------------------------------
     // 18/09/2026 - Last Modified

@@ -1,5 +1,6 @@
 # Random_SideProjects
-Crap I made for fun during school vibes.
+Crap I made for fun during school vibes. 
+(or projects I made in class which I stole and placed here) 
 This is mostly to learn and steal from.
 
 # Notes:

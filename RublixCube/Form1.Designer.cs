@@ -1,4 +1,4 @@
-﻿namespace rublixcobe
+﻿namespace RublixCube
 {
     partial class Form1
     {

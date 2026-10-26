@@ -1,4 +1,4 @@
-namespace rublixcobe
+namespace RublixCube
 {
     internal static class Program
     {
